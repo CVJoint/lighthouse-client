@@ -81,4 +81,4 @@ docker-compose up -d
 
 ```
 docker logs -f --tail 500 <service>
-``
+```
