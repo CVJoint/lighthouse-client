@@ -70,14 +70,14 @@ openssl rand -hex 32 | tr -d "\n" > /home/$USER/gnosis/jwtsecret/jwtsecret
 docker run --rm --volume /home/$USER/gnosis/cl-client/keystores:/keystores --volume /home/$USER/gnosis/cl-client:/data sigp/lighthouse:latest-modern lighthouse account validator import --network gnosis --password-file /keystores/password.txt --reuse-password --directory /keystores --datadir /data
 ```
 
-4. Start `docker-compose.yml` services from this repository
+6. Start `docker-compose.yml` services from this repository
 
 ```
 cd /home/$USER/gnosis
 docker-compose up -d
 ```
 
-5. Check your logs for each service (`el-client`, `cl-node`, or `cl-validator`) with:
+7. Check your logs for each service (`el-client`, `cl-node`, or `cl-validator`) with:
 
 ```
 docker logs -f --tail 500 <service>
