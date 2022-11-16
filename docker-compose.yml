@@ -32,9 +32,9 @@ services:
     logging:
       driver: "local"
 
-  cl-node:
-    hostname: cl-node
-    container_name: cl-node
+  cl-client:
+    hostname: cl-client
+    container_name: cl-client
     image: sigp/lighthouse:latest-modern
     restart: always
     depends_on:
@@ -54,6 +54,7 @@ services:
       --target-peers 80
       --debug-level info
       --suggested-fee-recipient $FEE_RECIPIENT
+      --checkpoint-sync-url $CHECKPOINT_URL
     networks:
       gnosis_net:
         ipv4_address: 192.168.32.101
@@ -68,13 +69,13 @@ services:
     logging:
       driver: "local"
 
-  cl-validator:
-    hostname: cl-validator
-    container_name: cl-validator
+  validator:
+    hostname: validator
+    container_name: validator
     image: sigp/lighthouse:latest-modern
     restart: always
     depends_on:
-      - cl-node
+      - cl-client
     command: |
       lighthouse validator_client
       --network gnosis

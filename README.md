@@ -1,12 +1,12 @@
 # Lighthouse Client - Docker
 
-This project uses the official lighthouse client [sigp/lighthouse](https://hub.docker.com/r/sigp/lighthouse) which includes the relevant configuration for the `gnosis` network.
+This project uses the official Lighthouse client [sigp/lighthouse](https://hub.docker.com/r/sigp/lighthouse) which includes the relevant configuration for the `gnosis` network.
 
 Images are referenced under the following pattern `sigp/lighthouse:{image-tag}` with the `image-tag` referring to the image available on Docker Hub.
 
 Most users should use the `latest-modern` tag, which corresponds to the latest stable release of Lighthouse with optimizations enabled. If you are running on older hardware then the default latest image bundles a portable version of Lighthouse which is slower but with better hardware compatibility.
 
-Pulling the latest lighthouse beacon client would look like this: 
+Pulling the latest Lighthouse beacon client would look like this: 
 
 ```
 docker pull sigp/lighthouse:latest-modern
@@ -28,12 +28,13 @@ mkdir /home/$USER/gnosis/cl-client/validators
 mkdir /home/$USER/gnosis/jwtsecret
 ```
 
-2. Add an `.env` file with your WAN IP (`curl https://ipinfo.io/ip`), fee recepient (your gnosis address), and graffiti `/home/$USER/gnosis/.env`.
+2. Add an `.env` file with your WAN IP (`curl https://ipinfo.io/ip`), fee recepient (your gnosis address), graffiti, and checkpoint url `/home/$USER/gnosis/.env`.
 
 ```
 WAN_IP:123.456.789.012
 FEE_RECIPIENT=0x0000000000000000000000000000000000000000
 GRAFFITI=gnosischain/lighthouse
+CHECKPOINT_URL=https://rpc-gbc.gnosischain.com/
 ```
 
 3. Add your keystores in `/home/$USER/gnosis/cl-client/keystores` and their password in a file `/home/$USER/gnosis/cl-client/keystores/password.txt` to get this file structure:
@@ -81,4 +82,12 @@ docker-compose up -d
 
 ```
 docker logs -f --tail 500 <service>
+```
+
+8. To update, just pull the new images, then stop and restart your docker-compose file:
+```
+cd /home/$USER/gnosis
+docker-compose pull
+docker-compose stop
+docker-compose up -d
 ```
