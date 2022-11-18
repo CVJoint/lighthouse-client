@@ -8,7 +8,15 @@ services:
     restart: always
     stop_grace_period: 1m
     command: |
-      --datadir=/data
+      --config xdai
+      --datadir /data
+      --JsonRpc.Enabled true
+      --JsonRpc.Host 192.168.32.100
+      --JsonRpc.Port 8545
+      --JsonRpc.JwtSecretFile /jwtsecret.json
+      --JsonRpc.EngineHost 192.168.32.100
+      --JsonRpc.EnginePort 8551
+      --Merge.Enabled true
     networks:
       gnosis_net:
         ipv4_address: 192.168.32.100
@@ -17,18 +25,9 @@ services:
       - "30303:30303/udp"
     volumes:
       - /home/$USER/gnosis/el-client:/data
-      - /home/$USER/gnosis/jwtsecret/jwtsecret:/jwtsecret
+      - /home/$USER/gnosis/jwtsecret/jwtsecret.json:/jwtsecret.json
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    environment:
-      - NETHERMIND_CONFIG=xdai
-      - NETHERMIND_JSONRPCCONFIG_ENABLED=true
-      - NETHERMIND_JSONRPCCONFIG_HOST=192.168.32.100
-      - NETHERMIND_JSONRPCCONFIG_PORT=8545
-      - NETHERMIND_JSONRPCCONFIG_JWTSECRETFILE=/jwtsecret
-      - NETHERMIND_JSONRPCCONFIG_ENGINEHOST=192.168.32.100
-      - NETHERMIND_JSONRPCCONFIG_ENGINEPORT=8551
-      - NETHERMIND_MERGECONFIG_ENABLED=true
     logging:
       driver: "local"
 
@@ -45,7 +44,7 @@ services:
       --discovery-port 12000
       --port 13000
       --execution-endpoint http://192.168.32.100:8551
-      --execution-jwt /jwtsecret
+      --execution-jwt /jwtsecret.json
       --datadir /data
       --http
       --http-address 192.168.32.101
@@ -63,7 +62,7 @@ services:
       - "13000:13000/tcp" #p2p
     volumes:
       - /home/$USER/gnosis/cl-client/data:/data
-      - /home/$USER/gnosis/jwtsecret/jwtsecret:/jwtsecret
+      - /home/$USER/gnosis/jwtsecret/jwtsecret.json:/jwtsecret.json
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     logging:
