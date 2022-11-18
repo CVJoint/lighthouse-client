@@ -62,7 +62,7 @@ Note, keystores MUST follow one of these file names
 4. Create a new `./jwtsecret` token:
 
 ```
-openssl rand -hex 32 | tr -d "\n" > /home/$USER/gnosis/jwtsecret/jwtsecret
+openssl rand -hex 32 | tr -d "\n" > /home/$USER/gnosis/jwtsecret/jwtsecret.json
 ```
 
 5. Import your validators:
